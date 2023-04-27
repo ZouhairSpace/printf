@@ -1,14 +1,16 @@
 #include "main.h"
 
+/************************* PRINT CHAR *************************/
+
 /**
- * print_char - Prints a character
- * @args: List of arguments
+ * print_char - Prints a char
+ * @types: List a of arguments
  * @buffer: Buffer array to handle print
- * @flags: Calculates active flags
+ * @flags:  Calculates active flags
  * @width: Width
  * @precision: Precision specification
  * @size: Size specifier
- * Return: Number of characters printed
+ * Return: Number of chars printed
  */
 int print_char(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
@@ -17,62 +19,62 @@ int print_char(va_list types, char buffer[],
 
 	return (handle_write_char(c, buffer, flags, width, precision, size));
 }
-
+/************************* PRINT A STRING *************************/
 /**
  * print_string - Prints a string
- * @args: List of arguments
+ * @types: List a of arguments
  * @buffer: Buffer array to handle print
- * @flags: Calculates active flags
- * @width: Width
+ * @flags:  Calculates active flags
+ * @width: get width.
  * @precision: Precision specification
  * @size: Size specifier
- * Return: Number of characters printed
+ * Return: Number of chars printed
  */
 int print_string(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	int len = 0, i;
-	char *s = va_arg(types, char *);
+	int length = 0, i;
+	char *str = va_arg(types, char *);
 
 	UNUSED(buffer);
 	UNUSED(flags);
 	UNUSED(width);
 	UNUSED(precision);
 	UNUSED(size);
-	if (s == NULL)
+	if (str == NULL)
 	{
-		s = "(null)";
+		str = "(null)";
 		if (precision >= 6)
-			s = "      ";
+			str = "      ";
 	}
 
-	while (s[len] != '\0')
-		len++;
+	while (str[length] != '\0')
+		length++;
 
-	if (precision >= 0 && precision < len)
-		len = precision;
+	if (precision >= 0 && precision < length)
+		length = precision;
 
-	if (width > len)
+	if (width > length)
 	{
 		if (flags & F_MINUS)
 		{
-			write(1, &s[0], len);
-			for (i = width - len; i > 0; i--)
+			write(1, &str[0], length);
+			for (i = width - length; i > 0; i--)
 				write(1, " ", 1);
 			return (width);
 		}
 		else
 		{
-			for (i = width - len; i > 0; i--)
+			for (i = width - length; i > 0; i--)
 				write(1, " ", 1);
-			write(1, &s[0], len);
+			write(1, &str[0], length);
 			return (width);
 		}
 	}
 
-	return (write(1, s, len));
+	return (write(1, str, length));
 }
-
+/************************* PRINT PERCENT SIGN *************************/
 /**
  * print_percent - Prints a percent sign
  * @types: Lista of arguments
